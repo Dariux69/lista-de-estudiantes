@@ -15,16 +15,17 @@ public:
         this->notaFinal = notaFinal;
     }
 
-    float tomarNota() const {
+    float getNota() const {
         return notaFinal;
     }
 
     void imprimir() const {
         cout << "Nombre: " << nombre
-             << "  Nota final: " << notaFinal << endl;
+             << " | Nota final: " << notaFinal << endl;
     }
 };
-//nodo
+
+//nodo de la lista
 struct Nodo {
     Estudiante estudiante;
     Nodo* siguiente;
@@ -36,6 +37,17 @@ struct Nodo {
 class ListaEnlazada {
 private:
     Nodo* head;
+
+    //funcion recursiva
+    float sumarNotasRecursivo(Nodo* nodo, int& contador) {
+        if (nodo == nullptr) {
+            return 0;
+        }
+
+        contador++;
+        return nodo->estudiante.getNota() +
+               sumarNotasRecursivo(nodo->siguiente, contador);
+    }
 
 public:
     ListaEnlazada() {
@@ -64,11 +76,34 @@ public:
             aux = aux->siguiente;
         }
     }
+
+    //promedio usando recursividad 
+    float calcularPromedioRecursivo() {
+        int contador = 0;
+        float suma = sumarNotasRecursivo(head, contador);
+
+        if (contador == 0) {
+            return 0;
+        }
+
+        return suma / contador;
+    }
 };
 
-
-
-
+//main
 int main() {
+    ListaEnlazada lista;
+
+    lista.agregarEstudiante("Ana", 8.5);
+    lista.agregarEstudiante("Carlos", 7.8);
+    lista.agregarEstudiante("Maria", 9.2);
+
+    cout << "Lista de estudiantes:\n";
+    lista.imprimirLista();
+
+    cout << "Promedio de notas: "
+         << lista.calcularPromedioRecursivo() << endl;
+
     return 0;
 }
+
