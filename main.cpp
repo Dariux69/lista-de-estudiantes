@@ -24,6 +24,50 @@ public:
              << "  Nota final: " << notaFinal << endl;
     }
 };
+//nodo
+struct Nodo {
+    Estudiante estudiante;
+    Nodo* siguiente;
+
+    Nodo(Estudiante e) : estudiante(e), siguiente(nullptr) {}
+};
+
+//lista enlazada
+class ListaEnlazada {
+private:
+    Nodo* head;
+
+public:
+    ListaEnlazada() {
+        head = nullptr;
+    }
+
+    void agregarEstudiante(string nombre, float nota) {
+        Estudiante e(nombre, nota);
+        Nodo* nuevo = new Nodo(e);
+
+        if (head == nullptr) {
+            head = nuevo;
+        } else {
+            Nodo* aux = head;
+            while (aux->siguiente != nullptr) {
+                aux = aux->siguiente;
+            }
+            aux->siguiente = nuevo;
+        }
+    }
+
+    void imprimirLista() {
+        Nodo* aux = head;
+        while (aux != nullptr) {
+            aux->estudiante.imprimir();
+            aux = aux->siguiente;
+        }
+    }
+};
+
+
+
 
 int main() {
     return 0;
